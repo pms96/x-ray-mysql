@@ -455,7 +455,7 @@ async def save_query(request: Request):
     }
     
     await db.saved_queries.insert_one(query_doc)
-    del query_doc["_id"] if "_id" in query_doc else None
+    query_doc.pop("_id", None)
     
     return query_doc
 
