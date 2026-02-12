@@ -1038,6 +1038,8 @@ async def test_database_connection(conn: MySQLConnection):
 @api_router.post("/enterprise/intelligence")
 async def get_database_intelligence(conn: MySQLConnection):
     """Module 1: Database Intelligence Layer"""
+    if not conn.host or not conn.user:
+        raise HTTPException(status_code=400, detail="MySQL connection required. Please provide host, user, password, and database.")
     return await analyze_database_intelligence(conn)
 
 @api_router.post("/enterprise/optimizer-trust")
@@ -1069,11 +1071,15 @@ async def get_index_impact(request: Request):
 @api_router.post("/enterprise/maturity-score")
 async def get_maturity_score(conn: MySQLConnection):
     """Module 5: Performance Maturity Score"""
+    if not conn.host or not conn.user:
+        raise HTTPException(status_code=400, detail="MySQL connection required. Please provide host, user, password, and database.")
     return await calculate_maturity_score(conn)
 
 @api_router.post("/enterprise/executive-report")
 async def get_executive_report(conn: MySQLConnection):
     """Module 6: Executive Report Generator"""
+    if not conn.host or not conn.user:
+        raise HTTPException(status_code=400, detail="MySQL connection required. Please provide host, user, password, and database.")
     return await generate_executive_report(conn)
 
 @api_router.post("/enterprise/full-analysis")
