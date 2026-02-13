@@ -1,0 +1,52 @@
+# ==========================================
+# RENDER BLUEPRINT - SQL X-Ray Enterprise
+# ==========================================
+# Este archivo configura automáticamente
+# backend + frontend en Render
+# ==========================================
+
+services:
+  # ========== BACKEND (FastAPI) ==========
+  - type: web
+    name: sql-xray-api
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: MONGO_URL
+        sync: false  # Configurar manualmente en Render Dashboard
+      - key: DB_NAME
+        value: sql_xray_enterprise
+      - key: CORS_ORIGINS
+        value: https://sql-xray-frontend.onrender.com
+      - key: EMERGENT_LLM_KEY
+        sync: false  # Configurar manualmente en Render Dashboard
+    healthCheckPath: /api/health
+    rootDir: backend
+
+  # ========== FRONTEND (React) ==========
+  - type: web
+    name: sql-xray-frontend
+    runtime: static
+    region: oregon
+    plan: free
+    buildCommand: yarn install && yarn build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_BACKEND_URL
+        value: https://sql-xray-api.onrender.com
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    rootDir: frontend
