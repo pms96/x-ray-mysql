@@ -25,6 +25,8 @@ mongo_url = "mongodb+srv://xray:2GpEVjbanJ7PU8cH@x-raid-query.femy2lp.mongodb.ne
 client = AsyncIOMotorClient(mongo_url)
 db = client["xraydb"]
 
+print("### MONGO_URL EN RUNTIME ###", mongo_url, flush=True)
+
 # OpenAI Key
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 
