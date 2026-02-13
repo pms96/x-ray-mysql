@@ -15,7 +15,7 @@ httpx==0.28.1
 aiohttp==3.13.3
 
 # LLM Integration
-emergentintegrations==0.1.0
+# emergentintegrations==0.1.0
 openai==1.99.9
 litellm==1.80.0
 
