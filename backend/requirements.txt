@@ -25,14 +25,14 @@ filelock==3.20.3
 flake8==7.3.0
 frozenlist==1.8.0
 fsspec==2026.1.0
-google-ai-generativelanguage==0.6.15
-google-api-core>=2.19.0,<2.20.0
+google-ai-generativelanguage==0.6.10
+google-api-core>=2.19.0,<2.30.0
 google-api-python-client==2.189.0
 google-auth==2.49.0.dev0
 google-auth-httplib2==0.3.0
 google-genai==1.62.0
 google-generativeai==0.8.3
-googleapis-common-protos==1.72.0
+googleapis-common-protos>=1.63.0,<2.0.0
 grpcio>=1.64.0,<1.70.0
 grpcio-status>=1.64.0,<1.70.0
 h11==0.16.0
@@ -72,7 +72,7 @@ pillow==12.1.0
 platformdirs==4.5.1
 pluggy==1.6.0
 propcache==0.4.1
-proto-plus==1.27.1
+proto-plus>=1.24.0,<2.0.0
 protobuf>=5.26.1,<6.0.0
 pyasn1==0.6.2
 pyasn1_modules==0.4.2
