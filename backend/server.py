@@ -28,7 +28,16 @@ db = client[os.environ['DB_NAME']]
 # OpenAI Key
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 
+# ==================== FASTAPI APP ====================
+
+app = FastAPI()  # <--- MOVER AQUÍ ARRIBA
+api_router = APIRouter(prefix="/api")
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 # ==================== DATABASE INITIALIZATION ====================
+
 @app.on_event("startup")
 async def init_db():
     logger.info("Initializing MongoDB collections and indexes...")
@@ -47,12 +56,6 @@ async def init_db():
     await db.saved_queries.create_index([("user_id", 1), ("created_at", -1)])
     
     logger.info("Database initialization complete.")
-    
-app = FastAPI()
-api_router = APIRouter(prefix="/api")
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 # ==================== MODELS ====================
 
