@@ -6,22 +6,20 @@ pydantic==2.12.5
 
 # Database
 motor==3.3.1
-pymongo==3.11
-aiomysql==0.3.2
+pymongo==4.10.1
+aiomysql==0.2.0
 PyMySQL==1.1.2
 
 # HTTP Client
 httpx==0.28.1
-aiohttp==3.13.3
+aiohttp==3.11.11
 
 # LLM Integration
-# emergentintegrations==0.1.0
-openai==1.99.9
-litellm==1.80.0
+openai==1.61.1
+litellm==1.60.1
 
 # Auth & Security
-cryptography==46.0.4
+cryptography==44.0.1
 
-# Google AI (for emergentintegrations)
-google-generativeai==0.8.6
-google-genai==1.62.0
+# Google AI
+google-generativeai==0.8.4
