@@ -14,7 +14,8 @@ import httpx
 import aiomysql
 import json
 import io
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+# from emergentintegrations.llm.chat import LlmChat, UserMessage
+from openai import AsyncOpenAI
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -1191,14 +1192,34 @@ async def analyze_sql_with_ai(request: SQLAnalysisRequest) -> Dict[str, Any]:
     if request.explain_output:
         user_prompt += f"\n\nEXPLAIN:\n```\n{request.explain_output}\n```"
     
-    chat = LlmChat(
-        api_key=EMERGENT_LLM_KEY,
-        session_id=f"sql_{uuid.uuid4().hex[:8]}",
-        system_message=system_prompt
-    ).with_model("openai", "gpt-5.2")
+    # chat = LlmChat(
+    #    api_key=EMERGENT_LLM_KEY,
+    #    session_id=f"sql_{uuid.uuid4().hex[:8]}",
+    #    system_message=system_prompt
+    #).with_model("openai", "gpt-5.2")
     
-    response = await chat.send_message(UserMessage(text=user_prompt))
+    #response = await chat.send_message(UserMessage(text=user_prompt))
     
+    client = AsyncOpenAI(
+        api_key=EMERGENT_LLM_KEY,  # Tu API key de Abacus.AI
+        base_url="https://routellm.abacus.ai/v1"
+    )
+
+    try:
+        completion = await client.chat.completions.create(
+            model="gpt-5",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.3,
+            max_tokens=4000
+        )
+        response = completion.choices[0].message.content
+    except Exception as e:
+        logger.error(f"RouteLLM API error: {e}")
+        return {"error": f"Error al analizar con IA: {str(e)}"}
+        
     import re
     json_match = re.search(r'\{[\s\S]*\}', response)
     if json_match:
