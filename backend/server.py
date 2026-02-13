@@ -23,7 +23,7 @@ load_dotenv(ROOT_DIR / '.env')
 # MongoDB connection
 mongo_url = "mongodb+srv://xray:2GpEVjbanJ7PU8cH@x-raid-query.femy2lp.mongodb.net/xraydb?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true"
 client = AsyncIOMotorClient(mongo_url)
-db = "x-raid-query"
+db = client["xraydb"]
 
 # OpenAI Key
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
