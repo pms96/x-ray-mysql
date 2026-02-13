@@ -39,27 +39,6 @@ api_router = APIRouter(prefix="/api")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# ==================== DATABASE INITIALIZATION ====================
-
-@app.on_event("startup")
-async def init_db():
-    logger.info("Initializing MongoDB collections and indexes...")
-    
-    # Índices para Usuarios
-    await db.users.create_index("email", unique=True)
-    await db.users.create_index("user_id", unique=True)
-    
-    # Índices para Sesiones
-    await db.user_sessions.create_index("session_token", unique=True)
-    await db.user_sessions.create_index("user_id")
-    await db.user_sessions.create_index("expires_at", expireAfterSeconds=0)
-    
-    # Índices para Queries Guardadas
-    await db.saved_queries.create_index("query_id", unique=True)
-    await db.saved_queries.create_index([("user_id", 1), ("created_at", -1)])
-    
-    logger.info("Database initialization complete.")
-
 # ==================== MODELS ====================
 
 class User(BaseModel):
