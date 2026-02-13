@@ -21,10 +21,7 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
-mongo_url = os.getenv(
-    "MONGO_URL",
-    "mongodb+srv://xray:2GpEVjbanJ7PU8cH@x-raid-query.femy2lp.mongodb.net/xraydb?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true",
-)
+mongo_url = "mongodb+srv://xray:2GpEVjbanJ7PU8cH@x-raid-query.femy2lp.mongodb.net/xraydb?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true"
 client = AsyncIOMotorClient(mongo_url)
 db = client["xraydb"]
 
