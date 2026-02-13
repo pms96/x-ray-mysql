@@ -6,7 +6,7 @@ pydantic==2.12.5
 
 # Database
 motor==3.3.1           # Driver async para Mongo
-pymongo==4.10.1        # Versión compatible con motor 3.3.1
+pymongo==4.6.3
 aiomysql==0.2.0
 PyMySQL==1.1.2
 
