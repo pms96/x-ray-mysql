@@ -198,6 +198,9 @@ async def get_real_tables(conn: MySQLConnection):
     MÓDULO 3 FIX: Obtiene los nombres REALES de las tablas.
     Esta es la fuente de verdad - NO asumimos nombres.
     """
+    if not conn.host or not conn.user:
+        raise HTTPException(status_code=400, detail="MySQL connection required. Please provide host, user, password, and database.")
+    
     try:
         pool = await get_or_create_pool(conn)
         introspector = TableIntrospector(pool)
@@ -212,9 +215,11 @@ async def get_real_tables(conn: MySQLConnection):
             "tables": tables_list,
             "table_dictionary": table_dict  # Para validación de queries
         }
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error getting tables: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=400, detail=f"Connection failed: {str(e)}")
 
 # ==================== MODULE 1: DATABASE SCANNER ====================
 
@@ -357,6 +362,9 @@ async def validate_query_tables(request: QueryAnalysisRequest):
     Valida que las tablas usadas en la query existen.
     Usa introspección REAL - nunca asume nombres.
     """
+    if not request.connection or not request.connection.host:
+        raise HTTPException(status_code=400, detail="MySQL connection required for table validation.")
+    
     try:
         pool = await get_or_create_pool(request.connection)
         introspector = TableIntrospector(pool)
@@ -410,9 +418,11 @@ async def validate_query_tables(request: QueryAnalysisRequest):
             "real_tables_available": list(real_tables.keys())[:50]  # Top 50 para referencia
         }
     
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Validation error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=400, detail=f"Connection failed: {str(e)}")
 
 @api_router.post("/query/explain")
 async def explain_query(request: QueryAnalysisRequest):
