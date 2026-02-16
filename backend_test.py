@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-SQL Tutor X-Ray Enterprise Edition - Backend API Testing
-Tests all backend endpoints without requiring MySQL connection
+SQL X-Ray Enterprise v2.1.0 Robust Edition - Backend API Testing
+Tests all backend endpoints including new incremental scanner and workload analyzer
 """
 
 import requests
