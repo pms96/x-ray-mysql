@@ -15,10 +15,9 @@ import json
 import io
 from contextlib import asynccontextmanager
 from openai import AsyncOpenAI
-from contextlib import asynccontextmanager
 
 # Import engines
-from scanner_engine import (<
+from scanner_engine import (
     MySQLPoolManager, ScanPersistence, TableIntrospector, 
     DatabaseScannerEngine, ScanType, ScanStatus
 )
