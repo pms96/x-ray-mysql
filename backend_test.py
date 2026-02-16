@@ -34,19 +34,23 @@ class SQLXRayAPITester:
         })
 
     def test_root_endpoint(self):
-        """Test /api/ endpoint for enterprise version info"""
+        """Test /api/ endpoint for v2.1.0 Robust Edition info"""
         try:
             response = self.session.get(f"{self.base_url}/api/")
             if response.status_code == 200:
                 data = response.json()
-                if "SQL Tutor X-Ray Enterprise" in data.get("message", "") and data.get("edition") == "MySQL 8 Enterprise":
-                    self.log_test("Root API endpoint", True, f"Version: {data.get('version')}", data)
+                expected_version = "2.1.0"
+                expected_edition = "MySQL 8 Enterprise - Robust Edition"
+                
+                if (data.get("version") == expected_version and 
+                    expected_edition in data.get("edition", "")):
+                    self.log_test("Root API endpoint (v2.1.0)", True, f"Version: {data.get('version')}, Edition: {data.get('edition')}", data)
                 else:
-                    self.log_test("Root API endpoint", False, f"Unexpected response: {data}")
+                    self.log_test("Root API endpoint (v2.1.0)", False, f"Expected v{expected_version} Robust Edition, got: {data}")
             else:
-                self.log_test("Root API endpoint", False, f"Status: {response.status_code}")
+                self.log_test("Root API endpoint (v2.1.0)", False, f"Status: {response.status_code}")
         except Exception as e:
-            self.log_test("Root API endpoint", False, f"Error: {str(e)}")
+            self.log_test("Root API endpoint (v2.1.0)", False, f"Error: {str(e)}")
 
     def test_health_endpoint(self):
         """Test /api/health endpoint"""
