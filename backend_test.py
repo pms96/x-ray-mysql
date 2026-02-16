@@ -292,10 +292,10 @@ class SQLXRayAPITester:
             self.log_test("Database Connection Test", False, f"Error: {str(e)}")
 
     def run_all_tests(self):
-        """Run all backend tests"""
-        print("🚀 Starting SQL X-Ray Enterprise Backend Tests")
+        """Run all backend tests for v2.1.0 Robust Edition"""
+        print("🚀 Starting SQL X-Ray Enterprise v2.1.0 Robust Edition Backend Tests")
         print(f"📍 Testing: {self.base_url}")
-        print("=" * 60)
+        print("=" * 70)
         
         # Core API tests
         self.test_root_endpoint()
@@ -307,14 +307,19 @@ class SQLXRayAPITester:
         # Database connectivity
         self.test_database_connection_test_endpoint()
         
+        # NEW v2.1.0 ENDPOINTS
+        print("\n🆕 Testing New v2.1.0 Robust Edition Features:")
+        self.test_new_scanner_endpoints()
+        self.test_new_workload_endpoints() 
+        self.test_new_db_tables_endpoint()
+        self.test_new_query_validate_endpoint()
+        self.test_mongodb_collections_for_incremental_storage()
+        
         # MongoDB collections (indirect test)
         self.test_mongodb_collections_structure()
         
-        # Enterprise modules
-        self.test_enterprise_endpoints_without_mysql()
-        
         # Summary
-        print("=" * 60)
+        print("=" * 70)
         print(f"📊 Tests completed: {self.tests_passed}/{self.tests_run} passed")
         
         if self.tests_passed == self.tests_run:
