@@ -1,27 +1,28 @@
 # Core
 fastapi==0.110.1
-uvicorn==0.25.0
+uvicorn[standard]==0.25.0
 python-dotenv==1.2.1
 pydantic==2.12.5
 
 # Database
-motor==3.3.1
-pymongo==4.5.0
-aiomysql==0.3.2
+motor==3.3.1           # Driver async para Mongo
+pymongo==4.6.3
+aiomysql==0.2.0
 PyMySQL==1.1.2
 
 # HTTP Client
 httpx==0.28.1
-aiohttp==3.13.3
+aiohttp==3.9.5
 
-# LLM Integration
-emergentintegrations==0.1.0
-openai==1.99.9
-litellm==1.80.0
+# LLM / RouteLLM (si estás usando la opción SDK)
+openai==1.61.1
 
 # Auth & Security
-cryptography==46.0.4
+cryptography==44.0.1
 
-# Google AI (for emergentintegrations)
+# Google AI (solo si realmente lo usas; si no, coméntalas)
 google-generativeai==0.8.6
 google-genai==1.62.0
+
+# IMPORTANTE: litellm fuera o sin versión fija
+# litellm   # <- Solo si de verdad lo usas en tu código. Si no, elimínalo.

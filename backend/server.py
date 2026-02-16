@@ -12,7 +12,10 @@ import uuid
 from datetime import datetime, timezone, timedelta
 import httpx
 import json
+import io
 from contextlib import asynccontextmanager
+from openai import AsyncOpenAI
+import asynccontextmanager
 
 # Import engines
 from scanner_engine import (
@@ -25,9 +28,11 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
+mongo_url = "mongodb+srv://xray:2GpEVjbanJ7PU8cH@x-raid-query.femy2lp.mongodb.net/xray?appName=x-raid-query&retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true"
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client["xray"]
+
+print("### MONGO_URL EN RUNTIME ###", mongo_url, flush=True)
 
 # OpenAI Key
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
