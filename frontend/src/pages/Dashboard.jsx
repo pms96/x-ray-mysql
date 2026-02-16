@@ -36,6 +36,8 @@ import DatabaseIntelligencePanel from '../components/DatabaseIntelligencePanel';
 import GrowthSimulationPanel from '../components/GrowthSimulationPanel';
 import MaturityScorePanel from '../components/MaturityScorePanel';
 import ExecutiveReportPanel from '../components/ExecutiveReportPanel';
+import DatabaseScannerPanel from '../components/DatabaseScannerPanel';
+import WorkloadAnalyzerPanel from '../components/WorkloadAnalyzerPanel';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -450,70 +452,52 @@ LIMIT 100;`);
                                                 </Button>
                                             </div>
                                         ) : (
-                                            <div className="space-y-3">
-                                                <Button
-                                                    variant="outline"
-                                                    className="w-full justify-start rounded-sm"
-                                                    onClick={runDatabaseIntelligence}
-                                                    disabled={loadingModule === 'intelligence'}
-                                                    data-testid="run-intelligence-btn"
-                                                >
-                                                    {loadingModule === 'intelligence' ? (
-                                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                                    ) : (
-                                                        <Brain className="w-4 h-4 mr-2 text-primary" />
-                                                    )}
-                                                    Database Intelligence
-                                                    <Badge variant="outline" className="ml-auto text-[10px]">Module 1</Badge>
-                                                </Button>
+                                            <div className="space-y-4">
+                                                {/* Module 1: Database Scanner (NEW - Incremental) */}
+                                                <DatabaseScannerPanel 
+                                                    connection={connection}
+                                                    isConnected={isConnected}
+                                                />
+                                                
+                                                {/* Module 6: Workload Analyzer (NEW - Incremental) */}
+                                                <WorkloadAnalyzerPanel
+                                                    connection={connection}
+                                                    isConnected={isConnected}
+                                                />
 
-                                                <Button
-                                                    variant="outline"
-                                                    className="w-full justify-start rounded-sm"
-                                                    onClick={runGrowthSimulation}
-                                                    disabled={loadingModule === 'growth' || !query.trim()}
-                                                    data-testid="run-growth-btn"
-                                                >
-                                                    {loadingModule === 'growth' ? (
-                                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                                    ) : (
-                                                        <TrendingUp className="w-4 h-4 mr-2 text-warning" />
-                                                    )}
-                                                    Growth Simulation
-                                                    <Badge variant="outline" className="ml-auto text-[10px]">Module 3</Badge>
-                                                </Button>
+                                                {/* Quick Actions */}
+                                                <div className="space-y-2 pt-4 border-t border-border">
+                                                    <p className="text-xs text-muted-foreground font-medium">Quick Analysis</p>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="w-full justify-start rounded-sm"
+                                                        onClick={runMaturityScore}
+                                                        disabled={loadingModule === 'maturity'}
+                                                    >
+                                                        {loadingModule === 'maturity' ? (
+                                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                        ) : (
+                                                            <Award className="w-4 h-4 mr-2 text-success" />
+                                                        )}
+                                                        Maturity Score
+                                                    </Button>
 
-                                                <Button
-                                                    variant="outline"
-                                                    className="w-full justify-start rounded-sm"
-                                                    onClick={runMaturityScore}
-                                                    disabled={loadingModule === 'maturity'}
-                                                    data-testid="run-maturity-btn"
-                                                >
-                                                    {loadingModule === 'maturity' ? (
-                                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                                    ) : (
-                                                        <Award className="w-4 h-4 mr-2 text-success" />
-                                                    )}
-                                                    Maturity Score
-                                                    <Badge variant="outline" className="ml-auto text-[10px]">Module 5</Badge>
-                                                </Button>
-
-                                                <Button
-                                                    variant="outline"
-                                                    className="w-full justify-start rounded-sm"
-                                                    onClick={runExecutiveReport}
-                                                    disabled={loadingModule === 'report'}
-                                                    data-testid="run-report-btn"
-                                                >
-                                                    {loadingModule === 'report' ? (
-                                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                                    ) : (
-                                                        <FileText className="w-4 h-4 mr-2 text-info" />
-                                                    )}
-                                                    Executive Report
-                                                    <Badge variant="outline" className="ml-auto text-[10px]">Module 6</Badge>
-                                                </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="w-full justify-start rounded-sm"
+                                                        onClick={runExecutiveReport}
+                                                        disabled={loadingModule === 'report'}
+                                                    >
+                                                        {loadingModule === 'report' ? (
+                                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                        ) : (
+                                                            <FileText className="w-4 h-4 mr-2 text-info" />
+                                                        )}
+                                                        Executive Report
+                                                    </Button>
+                                                </div>
                                             </div>
                                         )}
                                     </TabsContent>
