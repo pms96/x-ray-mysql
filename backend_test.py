@@ -150,7 +150,7 @@ class SQLXRayAPITester:
                 json={"connection": test_connection, "scan_type": "intelligence"},
                 headers={"Content-Type": "application/json"}
             )
-            # Should return error but endpoint should exist
+            # Should return error but endpoint should exist (500 is acceptable for connection failure)
             if response.status_code in [400, 500]:
                 self.log_test("Scanner Start Endpoint (/api/scan/start)", True, "Endpoint exists (connection error expected)")
             else:
